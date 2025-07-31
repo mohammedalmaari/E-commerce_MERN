@@ -14,7 +14,7 @@ export default function HomePage() {
      try{
       const res = await fetch(`${BASE_URL}/product`);
      if (!res.ok) {
-        throw 'Something is fialed'
+        throw Error('Something is fialed')
      }
      const data = await res.json();
      setProduct(data);
