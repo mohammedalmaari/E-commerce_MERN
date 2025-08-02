@@ -14,10 +14,9 @@ import { useAuth } from "../context/Auth/AuthContext";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-
 function Navbar() {
-  const navigate = useNavigate()
-  const {username , isAuthentication} = useAuth()
+  const navigate = useNavigate();
+  const { username, isAuthentication, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -26,13 +25,17 @@ function Navbar() {
     setAnchorElUser(event.currentTarget);
   };
 
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const handleLogin=()=>{
+  const handleLogin = () => {
     navigate("/login");
-  }
+  };
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    handleCloseUserMenu();
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -132,15 +135,11 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem  onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    myOrder
-                  </Typography>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: "center" }}>myOrder</Typography>
                 </MenuItem>
-                <MenuItem  onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    Logout
-                  </Typography>
+                <MenuItem onClick={handleLogout}>
+                  <Typography sx={{ textAlign: "center" }}>Logout</Typography>
                 </MenuItem>
               </Menu>
             </Box>
