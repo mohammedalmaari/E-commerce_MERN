@@ -3,32 +3,25 @@ import { useRef, useState } from "react";
 import { BASE_URL } from "../constant/base_url";
 import { useAuth } from "../context/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-
-export default function RegisterPage() {
-  const navigate= useNavigate()
+export default function LoginPage() {
+    const navigate = useNavigate()
   const [error, setError] = useState("");
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { login } = useAuth();
   const onSubmit = async () => {
-    const firstName = firstNameRef.current?.value;
-    const lastName = lastNameRef.current?.value;
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
-    if (!firstName || !lastName || !email || !password) {
-      setError("Check Submmited Data !")
+    if (!email || !password) {
+      setError("Check Submmited Data !");
       return;
     }
-    const res = await fetch(`${BASE_URL}/user/register`, {
+    const res = await fetch(`${BASE_URL}/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstName,
-        lastName,
         email,
         password,
       }),
@@ -56,7 +49,7 @@ export default function RegisterPage() {
           mt: 4,
         }}
       >
-        <Typography variant="h6">Register New Account</Typography>
+        <Typography variant="h6">Login To Your  Account</Typography>
         <Box
           sx={{
             display: "flex",
@@ -68,12 +61,6 @@ export default function RegisterPage() {
             p: 2,
           }}
         >
-          <TextField
-            inputRef={firstNameRef}
-            label="First Name"
-            name="firstname"
-          />
-          <TextField inputRef={lastNameRef} label="Last name" name="lastname" />
           <TextField inputRef={emailRef} label="Email" name="email" />
           <TextField
             inputRef={passwordRef}
@@ -82,7 +69,7 @@ export default function RegisterPage() {
             name="password"
           />
           <Button variant="contained" onClick={onSubmit}>
-            Register
+            Login
           </Button>
           {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
         </Box>
